@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Valentine Gift Animation</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #ffdde1;
+            overflow: hidden;
+            flex-direction: column;
+        }
+        .gift-box {
+            position: relative;
+            width: 160px;
+            height: 160px;
+            background: linear-gradient(45deg, #ff416c, #ff4b2b);
+            border-radius: 10px;
+            cursor: pointer;
+            transition: 0.5s;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+        }
+        .lid {
+            position: absolute;
+            width: 170px;
+            height: 55px;
+            background: linear-gradient(45deg, #ff2d55, #ff5733);
+            top: -27px;
+            left: -5px;
+            border-radius: 10px 10px 0 0;
+            transition: transform 0.5s;
+        }
+        .ribbon {
+            position: absolute;
+            width: 20px;
+            height: 100%;
+            background: red;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        .ribbon-horizontal {
+            position: absolute;
+            width: 100%;
+            height: 20px;
+            background: red;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+        .heart {
+            position: absolute;
+            width: 60px;
+            height: 60px;
+            background-color: red;
+            top: 40px;
+            clip-path: polygon(50% 0%, 100% 35%, 80% 100%, 50% 80%, 20% 100%, 0% 35%);
+            opacity: 0;
+            transition: opacity 0.5s, transform 0.5s;
+        }
+        .message {
+            margin-top: 20px;
+            font-size: 22px;
+            color: #d6001c;
+            font-weight: bold;
+            opacity: 0;
+            transition: opacity 0.5s;
+        }
+        .cover-letter {
+            position: absolute;
+            width: 180px;
+            height: 120px;
+            background-color: #fff;
+            top: 60px;
+            left: -10px;
+            border-radius: 8px;
+            padding: 12px;
+            text-align: center;
+            font-size: 18px;
+            font-weight: bold;
+            box-shadow: 0 6px 10px rgba(0,0,0,0.15);
+            opacity: 0;
+            transition: opacity 0.5s, transform 0.5s;
+        }
+        .gift-box.open .lid {
+            transform: translateY(-80px) rotate(-15deg);
+        }
+        .gift-box.open .heart {
+            opacity: 1;
+            transform: translateY(-80px);
+        }
+        .gift-box.open .cover-letter {
+            opacity: 1;
+            transform: translateY(-50px);
+        }
+        .gift-box.open + .message {
+            opacity: 1;
+        }
+        /* Full-screen confetti effect */
+        @keyframes confetti {
+            0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+        }
+        .confetti {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background: red;
+            opacity: 0.7;
+            border-radius: 50%;
+            animation: confetti linear infinite;
+        }
+    </style>
+</head>
+<body>
+    <div class="gift-box" onclick="openGift()">
+        <div class="lid"></div>
+        <div class="ribbon"></div>
+        <div class="ribbon-horizontal"></div>
+        <div class="heart"></div>
+        <div class="cover-letter">You are my greatest gift! 💖</div>
+    </div>
+    <div class="message">Happy Valentine's Day! Papa❤️</div>
+    
+    <script>
+        function openGift() {
+            document.querySelector('.gift-box').classList.toggle('open');
+            createConfetti();
+        }
+
+        function createConfetti() {
+            for (let i = 0; i < 50; i++) {
+                let confetti = document.createElement("div");
+                confetti.classList.add("confetti");
+                confetti.style.left = Math.random() * window.innerWidth + "px";
+                confetti.style.top = Math.random() * window.innerHeight + "px";
+                confetti.style.background = `hsl(${Math.random() * 360}, 100%, 50%)`;
+                confetti.style.animationDuration = Math.random() * 3 + 2 + "s";
+                document.body.appendChild(confetti);
+                setTimeout(() => confetti.remove(), 5000);
+            }
+        }
+    </script>
+</body>
+</html>
